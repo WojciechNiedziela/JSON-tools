@@ -1,5 +1,6 @@
 package com.example.json_tools;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +16,23 @@ public class JsonMinify {
      * TODO zwrocic zminifikowany JSON
 
      */
+
+    @GetMapping("/minify")
+    public String minifyPage() {
+        return """
+            <html>
+                <body>
+                    <h1>JSON Tools – Minify</h1>
+                    <p>Use POST /minify with JSON body.</p>
+                </body>
+            </html>
+        """;
+    }
+
+    
     @PostMapping("/minify")
     public Map<String, Object> minify(@RequestBody Map<String, Object> body) {
-        return null;
+        return body;
     }
 
 }
