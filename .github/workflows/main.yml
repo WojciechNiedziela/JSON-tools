@@ -21,10 +21,11 @@ jobs:
           java-version: '17'
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B package
+        working-directory: json-tools
 
       - name: Upload .jar artifact
         uses: actions/upload-artifact@v4
         with:
           name: json-tools-application
-          path: target/*.jar
+          path: json-tools/target/*.jar
