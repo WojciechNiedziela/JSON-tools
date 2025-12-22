@@ -4,9 +4,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+/**
+ * JsonObject class is responsible for handling routes under /object
+ *
+ * @version 1.0
+ */
 @RestController
 public class JsonObject {
 
+    /**
+     * this method is responsible for handling requests to GET /object
+     *
+     * @return String html explaining usage of /object routes
+     */
     @GetMapping("/object")
     public String objectPage() {
         return """
@@ -27,6 +37,12 @@ public class JsonObject {
                         """;
     }
 
+    /**
+     * this method is responsible for handling requests to POST /object
+     *
+     * @param body body of POST /object request
+     * @return String that is equivalent representation of requests body as java class
+     */
     @PostMapping("/object")
     public String object(@RequestBody Map<String, Object> body) {
 
@@ -43,6 +59,14 @@ public class JsonObject {
         return code.toString();
     }
 
+    /**
+     * this is used to generate class for given json
+     *
+     * @param className name to be given o generated class
+     * @param json json object
+     * @param code StringBuilder that is written with class data
+     * @param generatedClasses set used to reuse already existing classes
+     */
     private void generateClass(
             String className,
             Map<String, Object> json,
@@ -69,6 +93,15 @@ public class JsonObject {
         code.append("\n}\n\n");
     }
 
+    /**
+     * this is used to find matching java class for json value
+     *
+     * @param fieldName name of field in json object
+     * @param value value for given field in json
+     * @param code passed here because of recursive call to generate class
+     * @param generatedClasses passed here because of recursive call to generate class
+     * @return String Java type of given field in json
+     */
     private String resolveType(
             String fieldName,
             Object value,
@@ -102,6 +135,12 @@ public class JsonObject {
         return "Object";
     }
 
+    /**
+     * this method capitalizes given string
+     *
+     * @param s String to be capitalized
+     * @return String capitalization of s
+     */
     private String capitalize(String s) {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
