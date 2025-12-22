@@ -20,6 +20,7 @@ public class HelloWorldController {
                         <li><a href="/pretty">Pretty Print JSON</a></li>
                         <li><a href="/filter">Filter JSON</a></li>
                         <li><a href="/compare">Compare JSON</a></li>
+                        <li><a href="/object">Object JSON</a></li>
                     </ul>
 
                     <p>Use POST requests with JSON body to access functionality.</p>
