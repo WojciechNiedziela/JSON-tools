@@ -11,16 +11,32 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.util.Map;
 
+
+/**
+ * JsonPretty class is responsible for handling routes on /pretty
+ *
+ * @version 1.0
+ */
 @RestController
 public class JsonPretty {
 
 
+    /**
+     * this method creates new Object mapper configured to pretty format json
+     *
+     * @return ObjectMapper configured to return nicely formatted json
+     */
     private ObjectMapper prettyMapper(){
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         return mapper;
     }
 
+    /**
+     * this method is responsible for handling requests to GET /pretty
+     *
+     * @return String html explaining usage of /pretty routes
+     */
    @GetMapping("/pretty")
     public String prettyPage() {
         return """
@@ -33,6 +49,13 @@ public class JsonPretty {
         """;
     }
 
+    /**
+     * this method is responsible for handling requests to POST /pretty
+     *
+     * @param body body of POST /pretty request
+     * @return ResponseEntity with status ok and body containing pretty formated json
+     * @throws Exception ObjectMapper failed to generate json string
+     */
     @PostMapping("/pretty")
     public ResponseEntity<String>  pretty(@RequestBody Map<String, Object> body) throws Exception {
         String json = prettyMapper().writeValueAsString(body);

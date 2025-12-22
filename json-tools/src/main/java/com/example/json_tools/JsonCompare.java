@@ -4,9 +4,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+/**
+ * JsonCompare class is responsible for handling routes under /compare
+ *
+ * @version 1.0
+ */
 @RestController
 public class JsonCompare {
 
+    /**
+     * this method is responsible for handling requests to GET /compare
+     *
+     * @return String html explaining usage of /compare routes
+     */
     @GetMapping("/compare")
     public String comparePage() {
         return """
@@ -25,6 +35,14 @@ public class JsonCompare {
                         """;
     }
 
+    /**
+     * this method is used to perform diff on objects
+     *
+     * @param left left diffed object
+     * @param right right diffed object
+     * @param path path that is currently diffed
+     * @return map of diffs
+     */
     private Map<String, Object> diff(String path, Object left, Object right) {
         return Map.of(
                 "path", path.startsWith(".") ? path.substring(1) : path,
@@ -32,6 +50,14 @@ public class JsonCompare {
                 "right", right);
     }
 
+    /**
+     * compares objects
+     *
+     * @param left left diffed object
+     * @param right right diffed object
+     * @param path path that is currently diffed
+     * @param diffs list of diffs
+     */
     private void compareObjects(Object left, Object right, String path,
             List<Map<String, Object>> diffs) {
 
@@ -85,6 +111,12 @@ public class JsonCompare {
         }
     }
 
+    /**
+     * this method is responsible for handling requests to POST /compare
+     *
+     * @param body body of POST /compare request
+     * @return Object describing diff between left and right
+     */
     @PostMapping("/compare")
     public Object compare(@RequestBody Map<String, Object> body) {
 
