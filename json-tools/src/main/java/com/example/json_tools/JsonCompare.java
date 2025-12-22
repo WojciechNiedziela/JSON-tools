@@ -1,5 +1,7 @@
 package com.example.json_tools;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -12,6 +14,7 @@ import java.util.*;
 @RestController
 public class JsonCompare {
 
+    final Logger logger = LoggerFactory.getLogger(JsonCompare.class);
     /**
      * this method is responsible for handling requests to GET /compare
      *
@@ -19,6 +22,7 @@ public class JsonCompare {
      */
     @GetMapping("/compare")
     public String comparePage() {
+        logger.info("request on GET /compare");
         return """
                             <html>
                                 <body>
@@ -119,6 +123,7 @@ public class JsonCompare {
      */
     @PostMapping("/compare")
     public Object compare(@RequestBody Map<String, Object> body) {
+        logger.info("request on POST /compare");
 
         Object left = body.get("left");
         Object right = body.get("right");
@@ -130,9 +135,11 @@ public class JsonCompare {
             return Map.of("message", "brak roznic");
         }
         if (leftEmpty) {
+            logger.debug("lewy pusty");
             return Map.of("error", "plik left json jest pusty");
         }
         if (rightEmpty) {
+            logger.debug("prawy pusty");
             return Map.of("error", "plik right json jest pusty");
         }
 

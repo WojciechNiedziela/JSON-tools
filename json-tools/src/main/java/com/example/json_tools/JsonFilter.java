@@ -1,5 +1,7 @@
 package com.example.json_tools;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +18,7 @@ import java.util.Map;
 @RestController
 public class JsonFilter {
 
+    final Logger logger = LoggerFactory.getLogger(JsonFilter.class);
 
     /*
 
@@ -30,6 +33,7 @@ public class JsonFilter {
      */
     @GetMapping("/filter")
     public String filterPage() {
+        logger.info("request on GET /filter");
         return """
             <html>
                 <body>
@@ -49,6 +53,7 @@ public class JsonFilter {
      */
     @PostMapping("/filter")
     public Map<String, Object> filter(@RequestBody Map<String, Object> body, @RequestParam String[] properties) {
+        logger.info("request on POST /filter with properties {}", (Object[]) properties);
         return body;
     }
 

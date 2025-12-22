@@ -1,5 +1,7 @@
 package com.example.json_tools;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +15,7 @@ import java.util.Map;
 @RestController
 public class HelloWorldController {
 
+    final Logger logger = LoggerFactory.getLogger(HelloWorldController.class);
     /**
      * this method is responsible for handling requests to GET /
      *
@@ -20,6 +23,7 @@ public class HelloWorldController {
      */
 	@GetMapping("/")
 	public String index() {
+        logger.info("request on GET /");
 		// return "JSON Tools";
 		return """ 
             <html> JSON Tools
