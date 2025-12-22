@@ -53,7 +53,7 @@ public class JsonPretty {
      * this method is responsible for handling requests to POST /pretty
      *
      * @param body body of POST /pretty request
-     * @return ResponseEntity<String> with status ok and body containing pretty formated json
+     * @return ResponseEntity with status ok and body containing pretty formated json
      * @throws Exception ObjectMapper failed to generate json string
      */
     @PostMapping("/pretty")

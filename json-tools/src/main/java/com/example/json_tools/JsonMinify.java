@@ -38,7 +38,7 @@ public class JsonMinify {
      * this method is responsible for handling requests to POST /minify
      *
      * @param body body of POST /minify request
-     * @return ResponseEntity<String> with status ok and body containing minified json
+     * @return ResponseEntity with status ok and body containing minified json
      * @throws Exception ObjectMapper failed to generate json string
      */
     @PostMapping("/minify")

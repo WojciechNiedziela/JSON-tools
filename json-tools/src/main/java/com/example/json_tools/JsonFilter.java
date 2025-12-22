@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+/**
+ * JsonFilter class is responsible for handling routes under /filter
+ *
+ * @version 1.0
+ */
 @RestController
 public class JsonFilter {
 
@@ -18,6 +23,11 @@ public class JsonFilter {
 
      */
 
+    /**
+     * this method is responsible for handling requests to GET /filter
+     *
+     * @return String html explaining usage of /filter routes
+     */
     @GetMapping("/filter")
     public String filterPage() {
         return """
@@ -31,6 +41,12 @@ public class JsonFilter {
     }
 
 
+/**
+     * this method is responsible for handling requests to POST /filter
+     *
+     * @param body body of POST /object request
+     * @return passed body
+     */
     @PostMapping("/filter")
     public Map<String, Object> filter(@RequestBody Map<String, Object> body, @RequestParam String[] properties) {
         return body;
