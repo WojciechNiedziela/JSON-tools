@@ -4,10 +4,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.util.Map;
 
@@ -15,12 +11,11 @@ import java.util.Map;
 public class JsonPretty {
 
 
-    private ObjectMapper prettyMapper(){
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        return mapper;
-    }
+    /*
 
+    * TODO zwrocic zformatowany JSON
+
+    */
    @GetMapping("/pretty")
     public String prettyPage() {
         return """
@@ -34,9 +29,8 @@ public class JsonPretty {
     }
 
     @PostMapping("/pretty")
-    public ResponseEntity<String>  pretty(@RequestBody Map<String, Object> body) throws Exception {
-        String json = prettyMapper().writeValueAsString(body);
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(json);
+    public Map<String, Object> pretty(@RequestBody Map<String, Object> body) {
+        return body;
     }
 
 }
