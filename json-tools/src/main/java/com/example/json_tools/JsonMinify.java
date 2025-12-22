@@ -4,7 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import java.util.Map;
 
 @RestController
@@ -29,10 +30,11 @@ public class JsonMinify {
         """;
     }
 
-    
+
     @PostMapping("/minify")
-    public Map<String, Object> minify(@RequestBody Map<String, Object> body) {
-        return body;
+    public String minify(@RequestBody Map<String, Object> body) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(body);
     }
 
 }
