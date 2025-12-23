@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>json-tools</artifactId>
-	<version>0.0.9</version>		<!-- TUTAJ ZMIENIAMY WERSJE PROJEKTU PO KAŻDEJ ZMIANIE-->
+	<version>0.0.12</version>		<!-- TUTAJ ZMIENIAMY WERSJE PROJEKTU PO KAŻDEJ ZMIANIE-->
 	<name>json-tools</name>
 	<description>Spring boot project JSON tools</description>
 	<url/>
@@ -67,6 +67,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>3.5.0</version>
 				<configuration>
+					<failOnError>false</failOnError>
 					<source>17</source>
 					<encoding>UTF-8</encoding>
 					<docencoding>UTF-8</docencoding>

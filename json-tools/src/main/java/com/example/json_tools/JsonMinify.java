@@ -43,8 +43,10 @@ public class JsonMinify {
      *
      * @param body body of POST /minify request
      * @return ResponseEntity with status ok and body containing minified json
-     * @throws Exception ObjectMapper failed to generate json string
      */
+
+    //  * @throws Exception ObjectMapper failed to generate json string
+
     @PostMapping("/minify")
     public String minify(@RequestBody String body) {
         logger.info("request on POST /minify");
