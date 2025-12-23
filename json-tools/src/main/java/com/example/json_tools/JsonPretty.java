@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
-import java.util.Map;
-
 
 /**
  * JsonPretty class is responsible for handling routes on /pretty
@@ -25,24 +20,13 @@ public class JsonPretty {
     final Logger logger = LoggerFactory.getLogger(JsonPretty.class);
 
     /**
-     * this method creates new Object mapper configured to pretty format json
-     *
-     * @return ObjectMapper configured to return nicely formatted json
-     */
-    private ObjectMapper prettyMapper(){
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        return mapper;
-    }
-
-    /**
      * this method is responsible for handling requests to GET /pretty
      *
      * @return String html explaining usage of /pretty routes
      */
-   @GetMapping("/pretty")
+    @GetMapping("/pretty")
     public String prettyPage() {
-       logger.info("request on GET /pretty");
+        logger.info("request on GET /pretty");
         return """
             <html>
                 <body>
@@ -57,14 +41,32 @@ public class JsonPretty {
      * this method is responsible for handling requests to POST /pretty
      *
      * @param body body of POST /pretty request
-     * @return ResponseEntity with status ok and body containing pretty formated json
-     * @throws Exception ObjectMapper failed to generate json string
+     * @return ResponseEntity with status ok and body containing pretty formatted json
      */
-    @PostMapping("/pretty")
-    public ResponseEntity<String>  pretty(@RequestBody Map<String, Object> body) throws Exception {
+    @PostMapping(
+        value = "/pretty",
+        produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<String> pretty(@RequestBody String body) {
         logger.info("request on POST /pretty");
-        String json = prettyMapper().writeValueAsString(body);
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(json);
-    }
 
+        try {
+            TextTransformer transformer =
+                    new PrettyDecorator(
+                            new BaseJsonTransformer()
+                    );
+
+            String result = transformer.transform(body);
+
+            return ResponseEntity
+                    .ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(result);
+
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Invalid JSON");
+        }
+    }
 }
