@@ -24,16 +24,6 @@ public class JsonPretty {
 
     final Logger logger = LoggerFactory.getLogger(JsonPretty.class);
 
-    /**
-     * this method creates new Object mapper configured to pretty format json
-     *
-     * @return ObjectMapper configured to return nicely formatted json
-     */
-    private ObjectMapper prettyMapper(){
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        return mapper;
-    }
 
     /**
      * this method is responsible for handling requests to GET /pretty
@@ -61,10 +51,10 @@ public class JsonPretty {
      * @throws Exception ObjectMapper failed to generate json string
      */
     @PostMapping("/pretty")
-    public ResponseEntity<String>  pretty(@RequestBody Map<String, Object> body) throws Exception {
+    public ResponseEntity<String>  pretty(@RequestBody String body){
         logger.info("request on POST /pretty");
-        String json = prettyMapper().writeValueAsString(body);
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(json);
+        TextTransformer transformer = new PrettyDecorator(new BaseJsonTransformer());
+        return ResponseEntity.ok(transformer.transform(body));
     }
 
 }
