@@ -46,10 +46,12 @@ public class JsonMinify {
      * @throws Exception ObjectMapper failed to generate json string
      */
     @PostMapping("/minify")
-    public String minify(@RequestBody Map<String, Object> body) throws Exception {
+    public String minify(@RequestBody String body) {
         logger.info("request on POST /minify");
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(body);
+
+        MinifyDecorator transformer = new MinifyDecorator(new BaseJsonTransformer());
+
+        return transformer.transform(body);
     }
 
 }
