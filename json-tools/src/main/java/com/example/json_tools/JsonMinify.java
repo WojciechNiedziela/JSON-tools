@@ -1,5 +1,7 @@
 package com.example.json_tools;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +18,7 @@ import java.util.Map;
 @RestController
 public class JsonMinify {
 
+    final Logger logger = LoggerFactory.getLogger(JsonMinify.class);
 
     /**
      * this method is responsible for handling requests to GET /minify
@@ -24,6 +27,7 @@ public class JsonMinify {
      */
     @GetMapping("/minify")
     public String minifyPage() {
+        logger.info("request on GET /minify");
         return """
             <html>
                 <body>
@@ -43,6 +47,7 @@ public class JsonMinify {
      */
     @PostMapping("/minify")
     public String minify(@RequestBody Map<String, Object> body) throws Exception {
+        logger.info("request on POST /minify");
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(body);
     }

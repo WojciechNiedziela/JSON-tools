@@ -1,5 +1,7 @@
 package com.example.json_tools;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -11,6 +13,7 @@ import java.util.*;
  */
 @RestController
 public class JsonObject {
+    final Logger logger = LoggerFactory.getLogger(JsonObject.class);
 
     /**
      * this method is responsible for handling requests to GET /object
@@ -19,6 +22,7 @@ public class JsonObject {
      */
     @GetMapping("/object")
     public String objectPage() {
+        logger.info("request on GET /object");
         return """
                             <html>
                                 <body>
@@ -45,11 +49,13 @@ public class JsonObject {
      */
     @PostMapping("/object")
     public String object(@RequestBody Map<String, Object> body) {
+        logger.info("request on POST /object");
 
         String className = (String) body.get("className");
         Object json = body.get("json");
 
         if (className == null || json == null || !(json instanceof Map)) {
+            logger.debug("bledne dane wejsciowe");
             return "Błędne dane wejściowe";
         }
 
